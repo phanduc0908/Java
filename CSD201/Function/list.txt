@@ -1,0 +1,195 @@
+----- ADD LAST-----
+  public void addLast(Person c) {
+        //make a new Node where next = null
+        Node p = new Node(c);
+        if(isEmpty()) head = tail = p;
+        else {
+            tail.next = p;
+            tail = p;
+        }
+    }
+//
+  void addLast(String xName, int xAge)
+   {//You should write here appropriate statements to complete this function.
+       if(xName.startsWith("B")) return;
+       //make a new Node where next = null
+       Person c = new Person(xName, xAge);
+       addLast(c);
+   }
+------- ADD FIRST --------
+  public void addFirst(Person c) {
+        //make a new Node where next = null
+        Node p = new Node(c);
+        if(isEmpty()) head = tail = p;
+        else {
+            p.next = head;
+            head = p;
+        }
+    }
+  //
+  void addFirst(String xName, int xAge)
+   {//You should write here appropriate statements to complete this function.
+       if(xName.startsWith("B")) return;
+       Person c = new Person(xName, xAge);
+       addFirst(c);
+   }
+------ REMOVE ---------------
+public void remove(int k) {
+        if (isEmpty()) {
+            return;
+        }
+        //remove head
+        if (k == 0) {
+            Node p = head;
+            head = head.next;
+            p.next = null;
+        } else {
+            Node p = getNode(k);
+            if (p == null) {
+                return;
+            }
+            Node q = getNode(k - 1);
+            //remove p
+            q.next = p.next;
+            p.next = null;
+            if (p == tail) {
+                tail = q;
+            }
+        }
+    }
+//
+  void remove(Node p) {
+      if(p == null || isEmpty()) return;
+      Node f = null, q = head;
+      //find the a node before p
+      while(q != null && q != p) {
+          f = q; q = q.next;
+      }
+      if(f == null) {//remove head
+          head = head.next;
+          if(head == null) tail = null;
+      }else {
+          f.next = p.next;
+          if(p == tail) tail = f;
+      }
+  }
+------- GET NODE -----------
+    public Node getNode(int k) {
+        int c = 0;
+        Node p = head;
+        while (p != null && c < k) {
+            p = p.next;
+            c++;
+        }
+        return p;
+    }
+// get node by name
+  public Node getNodeByName(String name) {
+
+        Node p = head;
+        while (p != null && !name.equalsIgnoreCase(p.info.name)) {
+            p = p.next;
+        }
+        return p;
+    }
+
+// Get position of Node
+  public int getPosOfNode( Node d) {
+        int count = 0;
+        
+        Node p = head;
+        while (p != null && p!=d) {
+            p = p.next;
+            count++;
+        }
+        return count;
+    }
+
+// Get second Node after first by name
+
+  public Node getNode(String xName) {
+        int c = 0;
+        Node p = head;
+        while (p != null) {
+            p = p.next;
+            if(xName.equals(p.info.name)){
+                c++;
+            }
+            if(c==2) break;
+            
+        }
+        return p;
+    }
+------ SIZE ------------
+    public int size() {
+        int c = 0;
+        Node p = head;
+        while (p != null) {
+            p = p.next;
+            c++;
+        }
+        return c;
+    }
+-------- SORT ---------
+    public void sort() {
+        Node pi, pj;
+        pi = head;
+        while (pi != null) {
+            pj = pi.next;
+            while (pj != null) {
+                if (pi.info.code.compareToIgnoreCase(pj.info.code) > 0) {
+                    Book t = pi.info;
+                    pi.info = pj.info;
+                    pj.info = t;
+                }
+                pj = pj.next;
+            }
+            pi = pi.next;
+        }
+    }
+// Sort 4 last 
+   int n = size();
+       for (int i = n - 4; i < n - 1; i++) {
+           for (int j = i + 1; j < n; j++) {
+               Node pi = getNode(i), pj = getNode(j);
+               if(pi.info.name.compareToIgnoreCase(pj.info.name) > 0) {
+                   Person t = pi.info; pi.info = pj.info; pj.info = t;
+               }
+           }
+       }
+
+// Sort 3 first
+  //3 first nodes 
+    int n = size();
+    //for(int i = n - 3; i < n; i++) {//3 last nodes
+       for (int i = 0; i < 3 - 1; i++) {//3 first nodes
+           for (int j = i+1; j < 3; j++) {//3 first nodes
+           //for(int j = i + 1; j < n; j++)//3 last nodes
+               Node pi = getNode(i), pj = getNode(j);
+               if(pi.info.name.compareToIgnoreCase(pj.info.name) > 0) {
+                   Person t = pi.info;pi.info = pj.info;pj.info = t;
+               }
+           }
+       }
+--------- GET NODE MAX MIN ----------
+  public Node getMax() {
+        if(isEmpty()) return null;
+        Node max = head;
+        Node p = head;
+        while(p != null) {
+            if(p.info.age > max.info.age) max = p;
+            p = p.next;
+        }
+        return max;
+    }
+  
+  public Node getMin() {
+        if(isEmpty()) return null;
+        Node max = head;
+        Node p = head;
+        while(p != null) {
+            if(p.info.age < max.info.age) max = p;
+            p = p.next;
+        }
+        return max;
+    }
